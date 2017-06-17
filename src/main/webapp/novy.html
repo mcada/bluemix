@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello World</title>
+
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="col-sm-4">
+        </div>
+    <div class="col-sm-4">
+        <div class="row">
+        <h1>Welcome.</h1>
+        <div id="nameInput" class="input-group-lg helloInput">
+            <p class="lead nowrap">Submit your nick and press enter:</p>
+            <input id="user_name" type="text" class="form-control" placeholder="name" aria-describedby="sizing-addon1" value="" />
+        </div>
+        <p id="response" class="lead "></p>
+
+        <p id="databaseNames" class="lead text-center"></p>
+
+        <input type="button" class="lead" onclick="location.href='had.html';" value="Play snake" />
+        <input type="button" class="lead " onclick="location.href='highscore.html';" value="Check highscore" />
+    </div>
+        </div>
+
+
+
+
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script>
+    	//Submit data when enter key is pressed
+        $('#user_name').keydown(function(e) {
+        	var name = $('#user_name').val();
+        	localStorage.setItem("Name",name);
+        	localStorage.setItem("isLoaded",0);
+
+            if (e.which == 13 && name.length > 0) { //catch Enter key
+                $('#nameInput').hide();
+           		$('#response').html("loading...");
+            	//POST request to API to create a new visitor entry in the database
+                $.ajax({
+				  method: "POST",
+				  url: "./api/highscore",
+				  contentType: "application/text",
+				  data: name
+				})
+                .done(function(data) {
+                    $('#response').html(data);
+                    //getNames();
+                });
+            }
+        });
+
+        //Retreive all the visitors from the database
+        function getNames(){
+          $.get("./api/highscore")
+              .done(function(data) {
+                  if(data.length > 0) {
+                    $('#databaseNames').html("Database contents: " + JSON.stringify(data));
+                  }
+              });
+          }
+
+          //Call getNames on page load.
+          //getNames();
+
+
+    </script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+
+</html>

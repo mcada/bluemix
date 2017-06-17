@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+
+<div class="col-sm-4">
+</div>
+<div class="col-sm-4">
+    <div class="row">
+
+<h2>Snakeeeeeeeee</h2>
+<p id="playersName">Currently playing as: </p>
+<input type="button"  class="lead" onclick="location.href='index.html';" value="Change name" />
+<input type="button"  class="lead" onclick="location.href='highscore.html';" value="Highscore" />
+<br/>
+
+<canvas id="gc" width="400" height="400"></canvas>
+
+
+
+<p id="score">Score: 0</p>
+<p id="best">Best of this session: 0</p>
+<p id="allTimeBest">Your all time best: 0</p>
+</div>
+    </div>
+<div class="col-sm-4">
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+px=py=10; //snake position
+gs=10; //grit size
+tc=40; //tile counter
+ax=ay=15; //food
+xv=yv=0;  //velocity
+trail=[]; //snake body
+tail = 5; //vocas :D
+best = 0;
+allTimeBest = 0;
+
+window.onload=function() {
+    $('#playersName').html("Currently playing as: " + localStorage.getItem("Name"));
+    if(localStorage.getItem("isLoaded") == 0) {
+        checkAllTimeBest();
+        	localStorage.setItem("isLoaded",1);
+        }
+	speed = 10;
+	canv=document.getElementById("gc");
+	ctx=canv.getContext("2d");	//graficky kontext
+	document.addEventListener("keydown",keyPush);
+	//setInterval(game,1000/(speed + tail));
+    //setTimeout(game, 100 - mySpeed);
+        game();
+
+}
+
+function game() {
+
+    if(ax==px && ay==py) {
+    		tail++;
+    		ax=Math.floor(Math.random()*tc);
+    		ay=Math.floor(Math.random()*tc);
+    	}
+
+	px+=xv;
+	py+=yv;
+
+
+
+
+	if(px<0) {
+		px= tc-1;
+	}
+	if(px>tc-1) {
+		px= 0;
+	}
+	if(py<0) {
+		py= tc-1;
+	}
+	if(py>tc-1) {
+		py= 0;
+	}
+	ctx.fillStyle="black";
+	ctx.fillRect(0,0,canv.width,canv.height);
+
+	ctx.fillStyle="lime";
+	for(var i=0;i<trail.length;i++) {
+		ctx.fillRect(trail[i].x*gs,trail[i].y*gs,gs-2,gs-2);
+		if(trail[i].x==px && trail[i].y==py) {
+			if(tail > 5 && best >= allTimeBest) {
+			    console.log('new record!');
+			    bestScore();
+			}
+			reset();
+		}
+	}
+	trail.push({x:px,y:py});
+	while(trail.length>tail) {
+	trail.shift();
+	}
+
+
+	ctx.fillStyle="red";
+	ctx.fillRect(ax*gs,ay*gs,gs-2,gs-2);
+
+    if ((tail - 5) > best) {
+	best = tail - 5;
+    }
+
+    if(best > allTimeBest) {
+        document.getElementById("allTimeBest").innerHTML = "Your all time best: " + best;
+    }
+
+
+    document.getElementById("score").innerHTML = "Score: " + (tail - 5);
+    document.getElementById("best").innerHTML = "Best of this session: " + best;
+    setTimeout(game,100 - (tail * 1.5))
+}
+function keyPush(evt) {
+	switch(evt.keyCode) {
+		case 37:
+			xv=-1;yv=0;
+			break;
+		case 38:
+			xv=0;yv=-1;
+			break;
+		case 39:
+			xv=1;yv=0;
+			break;
+		case 40:
+			xv=0;yv=1;
+			break;
+	}
+}
+
+function bestScore() {
+                name = localStorage.getItem("Name");
+                text = name + " " + best;
+    $.ajax({
+				  method: "POST",
+				  url: "./api/highscore/newBest",
+				  contentType: "application/text",
+				  data: text
+				})
+                .done(function(data) {
+                    //$('#response').html(data);
+                    //getNames();
+                });
+    //update alltimebest
+}
+
+function reset() {
+    px=py=10; //snake position
+    gs=10; //grit size
+    tc=40; //tile counter
+    ax=ay=15; //food
+    xv=yv=0;  //velocity
+    trail=[]; //snake body
+    tail = 5; //vocas :D
+}
+
+function checkAllTimeBest() {
+    name = localStorage.getItem("Name");
+    $.ajax({
+              method: "POST",
+              url: "./api/highscore/getBest",
+              contentType: "application/text",
+              data: name
+            })
+            .done(function(data) {
+                allTimeBest = data;
+                document.getElementById("allTimeBest").innerHTML = "Your all time best: " + allTimeBest;
+
+                //$('#response').html(data);
+                //getNames();
+            });
+
+}
+</script>
+
+
+
+
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</body>
+</html>

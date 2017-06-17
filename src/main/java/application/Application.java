@@ -15,6 +15,9 @@
  *******************************************************************************/ 
 package application;
 
+import persistenceAPI.DatabaseConnector;
+
 public class Application {
+   private DatabaseConnector myConnector = new DatabaseConnector();
 
 }
