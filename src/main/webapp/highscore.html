@@ -8,11 +8,11 @@
 
 <div class="col-sm-4">
 </div>
-<div class="col-sm-4">
-    <div class="row">
+<div class="col-sm-4 middleText">
+    <div class="row" >
     <h1>HIGH SCORE</h1>
 
-<input type="button" class="lead"  onclick="location.href='index.html';" value="Change name" />
+<input type="button" class="lead"   onclick="location.href='index.html';" value="Change name" />
 <input type="button" class="lead" onclick="location.href='had.html';" value="Play again" />
 
 <p id="playersName">Currently playing as: </p>
@@ -43,6 +43,7 @@
                     //$('#databaseNames').html("Database contents: " + highscore);
                     $('#playersName').html("Currently playing as: " + localStorage.getItem("Name"));
                     $('#databaseNames2').html(tableMaker(data));
+                    localStorage.setItem("isLoaded", 0);
                   }
               });
           }

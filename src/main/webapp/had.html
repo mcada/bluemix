@@ -21,6 +21,7 @@
 <p id="score">Score: 0</p>
 <p id="best">Best of this session: 0</p>
 <p id="allTimeBest">Your all time best: 0</p>
+        <p id="loaded">not loaded</p>
 </div>
     </div>
 <div class="col-sm-4">
@@ -28,6 +29,7 @@
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
 <script>
 px=py=10; //snake position
 gs=10; //grit size
@@ -37,14 +39,16 @@ xv=yv=0;  //velocity
 trail=[]; //snake body
 tail = 5; //vocas :D
 best = 0;
-allTimeBest = 0;
+allTimeBest;
 
 window.onload=function() {
     $('#playersName').html("Currently playing as: " + localStorage.getItem("Name"));
-    if(localStorage.getItem("isLoaded") == 0) {
+    //if(localStorage.getItem("isLoaded") == 0) {
         checkAllTimeBest();
-        	localStorage.setItem("isLoaded",1);
-        }
+                       // document.getElementById("loaded").innerHTML = "loading.......done";
+
+      //  localStorage.setItem("isLoaded",1);
+    //}
 	speed = 10;
 	canv=document.getElementById("gc");
 	ctx=canv.getContext("2d");	//graficky kontext

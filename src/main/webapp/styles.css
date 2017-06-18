@@ -1,7 +1,18 @@
+td {
+  text-align: left;
+  vertical-align: middle;
+}
+
 .helloInput {
   width: 400px;
 }
 
 .nowrap {
   white-space: nowrap ;
+}
+
+.middleText {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }

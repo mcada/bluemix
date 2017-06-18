@@ -43,13 +43,19 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script>
+        currentName = localStorage.getItem("Name",0);
+        if(!(currentName.length > 0)) {
+            localStorage.setItem("Name", "no_name");
+
+        }
+
     	//Submit data when enter key is pressed
         $('#user_name').keydown(function(e) {
         	var name = $('#user_name').val();
-        	localStorage.setItem("Name",name);
         	localStorage.setItem("isLoaded",0);
 
             if (e.which == 13 && name.length > 0) { //catch Enter key
+                localStorage.setItem("Name",name);
                 $('#nameInput').hide();
            		$('#response').html("loading...");
             	//POST request to API to create a new visitor entry in the database
@@ -75,6 +81,7 @@
                   }
               });
           }
+
 
           //Call getNames on page load.
           //getNames();
