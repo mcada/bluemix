@@ -25,31 +25,23 @@ public class DatabaseConnector {
    public List<Record> getHighscore() throws SQLException {
       System.out.println("Connecting database...");
 
-         createConnection();
+      createConnection();
 
 
-         System.out.println("Database connected!");
+      System.out.println("Database connected!");
 
-         Statement stmt = dbconnection.createStatement();
-         ResultSet rs = stmt.executeQuery("SELECT * FROM highscore");
+      Statement stmt = dbconnection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM highscore");
 
 
-         while(rs.next()) {
-            highscoreList.add(new Record(rs.getString("nick"), rs.getInt("score")));
-         }
+      while (rs.next()) {
+         highscoreList.add(new Record(rs.getString("nick"), rs.getInt("score")));
+      }
 
-         for(Record rec : highscoreList) {
-            System.out.println(rec.toString());
-         }
+      highscoreList.sort(Comparator.comparingInt(Record::getScore).reversed());
 
-         highscoreList.sort(Comparator.comparingInt(Record::getScore).reversed());
-
-         //stmt.executeUpdate("insert into highscore values ('vlasec', 666)");//executeQuery("insert into highscore values ('vlasec', 666)");
-
-         //stmt.executeUpdate("delete from highscore where score < 777");
-
-         stmt.close();
-         rs.close();
+      stmt.close();
+      rs.close();
       dbconnection.close();
       return highscoreList;
    }
@@ -86,7 +78,7 @@ public class DatabaseConnector {
 
       Statement stmt = dbconnection.createStatement();
 
-      stmt.executeUpdate(String.format("insert into highscore values ('%s', %d)",  name, score));
+      stmt.executeUpdate(String.format("insert into highscore values ('%s', %d)", name, score));
       stmt.close();
       dbconnection.close();
    }

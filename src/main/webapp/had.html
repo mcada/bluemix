@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <meta charset="UTF-8">
+    <title>High tech cloud service mysql failover proof best snake ever</title>
+</head>
 <body>
 
 
@@ -8,22 +12,20 @@
 <div class="col-sm-4">
     <div class="row">
 
-<h2>Snakeeeeeeeee</h2>
-<p id="playersName">Currently playing as: </p>
-<input type="button"  class="lead" onclick="location.href='index.html';" value="Change name" />
-<input type="button"  class="lead" onclick="location.href='highscore.html';" value="Highscore" />
-<br/>
+        <h2>Snakeeeeeeeee</h2>
+        <p id="playersName">Currently playing as: </p>
+        <input type="button" class="lead" onclick="location.href='index.html';" value="Change name"/>
+        <input type="button" class="lead" onclick="location.href='highscore.html';" value="Highscore"/>
+        <br/>
 
-<canvas id="gc" width="400" height="400"></canvas>
+        <canvas id="gc" width="400" height="400"></canvas>
 
 
-
-<p id="score">Score: 0</p>
-<p id="best">Best of this session: 0</p>
-<p id="allTimeBest">Your all time best: 0</p>
-        <p id="loaded">not loaded</p>
-</div>
+        <p id="score">Score: 0</p>
+        <p id="best">Best of this session: 0</p>
+        <p id="allTimeBest">Your all time best: 0</p>
     </div>
+</div>
 <div class="col-sm-4">
 </div>
 
@@ -43,19 +45,14 @@ allTimeBest;
 
 window.onload=function() {
     $('#playersName').html("Currently playing as: " + localStorage.getItem("Name"));
-    //if(localStorage.getItem("isLoaded") == 0) {
-        checkAllTimeBest();
-                       // document.getElementById("loaded").innerHTML = "loading.......done";
 
-      //  localStorage.setItem("isLoaded",1);
-    //}
+    checkAllTimeBest();
+
 	speed = 10;
 	canv=document.getElementById("gc");
 	ctx=canv.getContext("2d");	//graficky kontext
 	document.addEventListener("keydown",keyPush);
-	//setInterval(game,1000/(speed + tail));
-    //setTimeout(game, 100 - mySpeed);
-        game();
+	game();
 
 }
 
@@ -69,8 +66,6 @@ function game() {
 
 	px+=xv;
 	py+=yv;
-
-
 
 
 	if(px<0) {
@@ -121,6 +116,7 @@ function game() {
     document.getElementById("best").innerHTML = "Best of this session: " + best;
     setTimeout(game,100 - (tail * 1.5))
 }
+
 function keyPush(evt) {
 	switch(evt.keyCode) {
 		case 37:
@@ -148,10 +144,7 @@ function bestScore() {
 				  data: text
 				})
                 .done(function(data) {
-                    //$('#response').html(data);
-                    //getNames();
                 });
-    //update alltimebest
 }
 
 function reset() {
@@ -176,25 +169,29 @@ function checkAllTimeBest() {
                 allTimeBest = data;
                 document.getElementById("allTimeBest").innerHTML = "Your all time best: " + allTimeBest;
 
-                //$('#response').html(data);
-                //getNames();
             });
 
 }
+
+
+
+
+
 </script>
 
 
-
-
-
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
 <!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+      integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
 <!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
 
 </body>
 </html>

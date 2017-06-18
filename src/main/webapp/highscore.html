@@ -3,28 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>High score</title>
+
+    <link href="styles.css" rel="stylesheet">
+
 </head>
 <body>
 
 <div class="col-sm-4">
 </div>
-<div class="col-sm-4 middleText">
-    <div class="row" >
-    <h1>HIGH SCORE</h1>
+<div class="col-sm-4 ">
+    <div class="row">
+        <h1>HIGH SCORE</h1>
 
-<input type="button" class="lead"   onclick="location.href='index.html';" value="Change name" />
-<input type="button" class="lead" onclick="location.href='had.html';" value="Play again" />
+        <input type="button" class="lead" onclick="location.href='index.html';" value="Change name"/>
+        <input type="button" class="lead" onclick="location.href='had.html';" value="Play again"/>
 
-<p id="playersName">Currently playing as: </p>
+        <p id="playersName">Currently playing as: </p>
 
-<p id="databaseNames2" class="lead text-center"></p>
-        </div>
+        <p id="databaseNames2" class="lead text-center"></p>
     </div>
+</div>
 <div class="col-sm-4">
 </div>
-
-
-
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -34,13 +34,11 @@
 
 <script>
 
-        //Retreive all the visitors from the database
-        function getNames(){
+        function getHighscore(){
           $.get("./api/highscore")
               .done(function(data) {
                   if(data.length > 0) {
                     highscore = JSON.stringify(data);
-                    //$('#databaseNames').html("Database contents: " + highscore);
                     $('#playersName').html("Currently playing as: " + localStorage.getItem("Name"));
                     $('#databaseNames2').html(tableMaker(data));
                     localStorage.setItem("isLoaded", 0);
@@ -49,29 +47,31 @@
           }
 
 
-
-          //Call getNames on page load.
-          getNames();
+          getHighscore();
 
          tableMaker = o => {var keys = Object.keys(o[0]),
-                                   rowMaker = (a,t) => a.reduce((p,c,i,a) => p + (i === a.length-1 ? "<" + t + ">" + c + "</" + t + "></tr>"
-                                                                                                   : "<" + t + ">" + c + "</" + t + ">"),"<tr>"),
-                                       rows = o.reduce((r,c) => r + rowMaker(keys.reduce((v,k) => v.concat(c[k]),[]),"td "),rowMaker(keys,"th"));
-                                   return "<table>" + rows + "</table>";
-                                  };
+           rowMaker = (a,t) => a.reduce((p,c,i,a) => p + (i === a.length-1 ? "<" + t + ">" + c + "</" + t + "></tr>"
+                                                                           : "<" + t + ">" + c + "</" + t + ">"),"<tr>"),
+               rows = o.reduce((r,c) => r + rowMaker(keys.reduce((v,k) => v.concat(c[k]),[]),"td "),rowMaker(keys,"th"));
+           return "<table>" + rows + "</table>";
+          };
 
-    </script>
+
+</script>
 
 
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
 <!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+      integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
 <!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
 
 
 </body>

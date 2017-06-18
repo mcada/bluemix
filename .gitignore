@@ -5,4 +5,5 @@ target/*
 .classpath
 .factorypath
 .project
+.idea*
 /target/

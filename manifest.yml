@@ -3,6 +3,6 @@ applications:
  - name: pa181-mcada
    host: pa181-mcada
    random-route: true
-   path: target/GetStartedJava.war
+   path: target/Snake.war
    memory: 512M
    instances: 1

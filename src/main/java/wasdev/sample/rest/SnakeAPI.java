@@ -2,20 +2,18 @@ package wasdev.sample.rest;
 
 import com.google.gson.Gson;
 import persistenceAPI.DatabaseConnector;
-import persistenceAPI.Record;
-import wasdev.sample.Visitor;
+
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Application;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by mcada on 6/17/17.
  */
 @ApplicationPath("api")
 @Path("/highscore")
-public class SnakeAPI {
+public class SnakeAPI extends Application {
 
    DatabaseConnector dbc = new DatabaseConnector();
 
@@ -24,7 +22,7 @@ public class SnakeAPI {
    @Produces("application/text")
    @Consumes("application/text")
    public String newToDo(String name) throws SQLException {
-      if(dbc.contains(name)) {
+      if (dbc.contains(name)) {
          return String.format("Hello again %s!", name);
       }
 
@@ -60,7 +58,6 @@ public class SnakeAPI {
       String delims = "[ ]+";
       String[] tokens = response.split(delims);
 
-      System.out.println(tokens[0] + " " + tokens[1]);
       dbc.updateRecord(tokens[0], Integer.parseInt(tokens[1]));
 
 
