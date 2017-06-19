@@ -42,7 +42,7 @@
 
 <script>
         currentName = localStorage.getItem("Name",0);
-        if(!(currentName.length > 0)) {
+        if( currentName == null ) {
             localStorage.setItem("Name", "no_name");
         }
 
